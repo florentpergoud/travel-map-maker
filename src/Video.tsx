@@ -1,12 +1,12 @@
 import {Composition} from 'remotion';
-import {BackgroundMap} from './BackgroundMap';
+import {Map} from './Map/Map';
 
 export const RemotionVideo: React.FC = () => {
 	return (
 		<>
 			<Composition
 				id="Map"
-				component={BackgroundMap}
+				component={Map}
 				durationInFrames={150}
 				fps={30}
 				width={1080}
