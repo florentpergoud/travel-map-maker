@@ -10,7 +10,6 @@ export const AnimatedPath: React.FC<Props> = ({
 	orginCoords,
 	destinationCoords,
 }) => {
-	console.log('orginCoords', orginCoords);
 	return (
 		<Container>
 			<svg xmlns="http://www.w3.org/2000/svg">

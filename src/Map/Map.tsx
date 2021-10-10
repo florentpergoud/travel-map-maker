@@ -1,51 +1,43 @@
-import {useState} from 'react';
 import styled from 'styled-components';
 
 import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
+
 import {LeafletMap} from './LeafletMap';
 import {CustomMarker} from './CustomMarker';
 import {AnimatedPath} from './AnimatedPath';
 import {AbsoluteFill} from 'remotion';
+import {useEnrichCoordinates} from './useEnrichCoordinates.ts';
 
-const PROPS = {
-	cities: [
-		{
-			name: 'London',
-			coordinates: [51.5073509, -0.12775829999998223] as [number, number],
-		},
-		{
-			name: 'Paris',
-			coordinates: [48.864716, 2.349014] as [number, number],
-		},
-	],
-};
-export const Map: React.FC = () => {
-	const [pixelCoordinates, setPixelCoordinates] = useState<Array<L.Point>>([]);
+interface Props {
+	cities: Array<City>;
+}
+
+export const Map: React.FC<Props> = ({cities}) => {
+	const {enrichedData, setPixelCoordinates} = useEnrichCoordinates({cities});
 
 	return (
 		<Container>
 			<LeafletMap
-				coordinates={PROPS.cities.map((city) => city.coordinates)}
+				coordinates={cities.map((city) => city.coordinates)}
 				setPixelCoordinates={setPixelCoordinates}
 			/>
 
 			<PathContainer>
-				{pixelCoordinates.length > 0 && (
+				{enrichedData.length > 0 && (
 					<AnimatedPath
-						orginCoords={pixelCoordinates[0]}
-						destinationCoords={pixelCoordinates[1]}
+						orginCoords={enrichedData[0].coordinates}
+						destinationCoords={enrichedData[1].coordinates}
 					/>
 				)}
 			</PathContainer>
 			<MarkersContainer>
-				{pixelCoordinates.map((coordinate, index) => (
+				{enrichedData.map((enrichedData, index) => (
 					<CustomMarker
 						key={`point-${index}`}
-						leftPixelCoord={coordinate.x}
-						topPixelCoord={coordinate.y}
+						leftPixelCoord={enrichedData.coordinates.x}
+						topPixelCoord={enrichedData.coordinates.y}
 						titlePosition="top"
-						title={PROPS.cities[index].name}
+						title={cities[index].name}
 					/>
 				))}
 			</MarkersContainer>
