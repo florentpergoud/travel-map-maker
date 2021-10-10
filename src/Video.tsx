@@ -1,5 +1,6 @@
 import {Composition} from 'remotion';
 import {Map} from './Map/Map';
+import '../assets/font.css';
 
 export const RemotionVideo: React.FC = () => {
 	return (

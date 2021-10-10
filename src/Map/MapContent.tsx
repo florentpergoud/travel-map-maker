@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import {useState} from 'react';
 import {delayRender} from 'remotion';
 import {continueRender} from 'remotion';
@@ -16,10 +15,10 @@ export const MapContent = ({coordinates, setPixelCoordinates}: Props) => {
 	const [handle] = useState(() => delayRender());
 
 	const selectedMap = MAPS.stadia;
-	const tileLayer = L.tileLayer(selectedMap.url, {
-		attribution: selectedMap.attribution,
-	});
-	tileLayer.addTo(map);
+	// const tileLayer = L.tileLayer(selectedMap.url, {
+	// 	attribution: selectedMap.attribution,
+	// });
+	// tileLayer.addTo(map);
 
 	const updatePixelCoordinates = () => {
 		const pixelCoordinates = coordinates.map((coordinates) => {
@@ -34,7 +33,8 @@ export const MapContent = ({coordinates, setPixelCoordinates}: Props) => {
 		updatePixelCoordinates();
 	};
 
-	tileLayer.on('load', onMapLoad);
+	// tileLayer.on('load', onMapLoad);
+	map.on('load', onMapLoad);
 	map.on('move', () => {
 		updatePixelCoordinates();
 	});

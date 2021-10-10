@@ -27,6 +27,7 @@ export const WrappedLeafletMap: React.FC<Props> = ({
 				zoom={1}
 				scrollWheelZoom={false}
 				style={{height: '1920px', width: '1080px'}}
+				zoomControl={false}
 			>
 				<MapContent
 					coordinates={coordinates}
