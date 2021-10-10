@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface Props {
-	orginCoords: L.Point;
-	destinationCoords: L.Point;
+	orginCoords: [number, number];
+	destinationCoords: [number, number];
 }
 
 export const AnimatedPath: React.FC<Props> = ({
@@ -14,7 +14,7 @@ export const AnimatedPath: React.FC<Props> = ({
 		<Container>
 			<svg xmlns="http://www.w3.org/2000/svg">
 				<StyledPath
-					d={`M${orginCoords.x} ${orginCoords.y} L ${destinationCoords.x} ${destinationCoords.y}`}
+					d={`M${orginCoords[0]} ${orginCoords[1]} L ${destinationCoords[0]} ${destinationCoords[1]}`}
 				/>
 			</svg>
 		</Container>

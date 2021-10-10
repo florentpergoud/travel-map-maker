@@ -10,10 +10,12 @@ import {useEnrichCoordinates} from './useEnrichCoordinates.ts';
 
 interface Props {
 	cities: Array<City>;
+	pathAnimationFrameDuration: number;
 }
 
-export const Map: React.FC<Props> = ({cities}) => {
-	const {enrichedData, setPixelCoordinates} = useEnrichCoordinates({cities});
+export const Map: React.FC<Props> = ({cities, pathAnimationFrameDuration}) => {
+	const {enrichedData, setPixelCoordinates, pathPixelCoordinates} =
+		useEnrichCoordinates({cities, pathAnimationFrameDuration});
 
 	return (
 		<Container>
@@ -23,10 +25,10 @@ export const Map: React.FC<Props> = ({cities}) => {
 			/>
 
 			<PathContainer>
-				{enrichedData.length > 0 && (
+				{pathPixelCoordinates && (
 					<AnimatedPath
-						orginCoords={enrichedData[0].coordinates}
-						destinationCoords={enrichedData[1].coordinates}
+						orginCoords={pathPixelCoordinates[0]}
+						destinationCoords={pathPixelCoordinates[1]}
 					/>
 				)}
 			</PathContainer>
