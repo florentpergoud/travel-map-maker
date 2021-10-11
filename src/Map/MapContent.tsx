@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {delayRender} from 'remotion';
 import {continueRender} from 'remotion';
-import {useMap} from 'react-leaflet';
+import {useMap, TileLayer} from 'react-leaflet';
 import {MAPS} from '../constants';
 import L from 'leaflet';
 
@@ -10,37 +10,43 @@ interface Props {
 	setPixelCoordinates: (pixelCoordinates: L.Point[]) => void;
 }
 
-export const MapContent = ({coordinates, setPixelCoordinates}: Props) => {
+const selectedMap = MAPS.stadia;
+
+const updatePixelCoordinates = (
+	map: L.Map,
+	coordinates: Array<[number, number]>,
+	setPixelCoordinates: (pixelCoordinates: L.Point[]) => void
+) => {
+	const pixelCoordinates = coordinates.map((coordinates) => {
+		return map.latLngToContainerPoint(coordinates);
+	});
+
+	setPixelCoordinates(pixelCoordinates);
+};
+
+export const MapContent: React.FC<Props> = ({
+	coordinates,
+	setPixelCoordinates,
+}: Props) => {
 	const map = useMap();
 	const [handle] = useState(() => delayRender());
 
-	const selectedMap = MAPS.stadia;
-	// const tileLayer = L.tileLayer(selectedMap.url, {
-	// 	attribution: selectedMap.attribution,
-	// });
-	// tileLayer.addTo(map);
-
-	const updatePixelCoordinates = () => {
-		const pixelCoordinates = coordinates.map((coordinates) => {
-			return map.latLngToContainerPoint(coordinates);
-		});
-
-		setPixelCoordinates(pixelCoordinates);
-	};
-
 	const onMapLoad = () => {
 		continueRender(handle);
-		updatePixelCoordinates();
+		updatePixelCoordinates(map, coordinates, setPixelCoordinates);
 	};
 
-	// tileLayer.on('load', onMapLoad);
 	map.on('load', onMapLoad);
+
 	map.on('move', () => {
-		updatePixelCoordinates();
+		updatePixelCoordinates(map, coordinates, setPixelCoordinates);
 	});
+
 	map.fitBounds(coordinates, {
 		padding: [100, 100],
 	});
 
-	return null;
+	return (
+		<TileLayer attribution={selectedMap.attribution} url={selectedMap.url} />
+	);
 };
