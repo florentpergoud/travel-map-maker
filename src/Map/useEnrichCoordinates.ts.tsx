@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {useCurrentFrame} from 'remotion';
+import {getLabelPosition} from './utils/getLabelPosition';
 import {getSecondPointPosition} from './utils/getSecondPointPosition';
 
 const DEFAULT_COORDINATES: [[number, number], [number, number]] = [
@@ -17,10 +18,14 @@ export const useEnrichCoordinates = ({
 	const frame = useCurrentFrame();
 	const [pixelCoordinates, setPixelCoordinates] = useState<Array<L.Point>>([]);
 
-	const enrichedData = pixelCoordinates.map((coordinates, index) => {
+	const markerData = pixelCoordinates.map((coordinates, index) => {
 		return {
 			coordinates,
 			name: cities[index].name,
+			labelPosition: getLabelPosition({
+				markerPosition: pixelCoordinates[index],
+				previousMarkerPosition: pixelCoordinates[index === 0 ? 1 : 0],
+			}),
 		};
 	});
 
@@ -39,7 +44,7 @@ export const useEnrichCoordinates = ({
 			: DEFAULT_COORDINATES;
 
 	return {
-		enrichedData,
+		markerData,
 		setPixelCoordinates,
 		pathPixelCoordinates,
 	};

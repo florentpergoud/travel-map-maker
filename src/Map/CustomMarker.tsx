@@ -61,10 +61,10 @@ const Title = styled.h2<{
 	titlePosition: string;
 }>`
 	position: absolute;
-	${({titlePosition}) => titlePosition === 'left' && `right: 100%`};
-	${({titlePosition}) => titlePosition === 'right' && `left: 100px`};
+	${({titlePosition}) => titlePosition === 'left' && `right: 110%`};
+	${({titlePosition}) => titlePosition === 'right' && `left: 112px`};
 	${({titlePosition}) => titlePosition === 'bottom' && `top: 100px`};
 	${({titlePosition}) => titlePosition === 'top' && `bottom: 100px`};
 	font-family: 'Aveny T WEB';
-	font-size: 40px;
+	font-size: 60px;
 `;

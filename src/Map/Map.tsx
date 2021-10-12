@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const Map: React.FC<Props> = ({cities, pathAnimationFrameDuration}) => {
-	const {enrichedData, setPixelCoordinates, pathPixelCoordinates} =
+	const {markerData, setPixelCoordinates, pathPixelCoordinates} =
 		useEnrichCoordinates({cities, pathAnimationFrameDuration});
 
 	return (
@@ -33,12 +33,12 @@ export const Map: React.FC<Props> = ({cities, pathAnimationFrameDuration}) => {
 				)}
 			</PathContainer>
 			<MarkersContainer>
-				{enrichedData.map((enrichedData, index) => (
+				{markerData.map((marker, index) => (
 					<CustomMarker
 						key={`point-${index}`}
-						leftPixelCoord={enrichedData.coordinates.x}
-						topPixelCoord={enrichedData.coordinates.y}
-						titlePosition="top"
+						leftPixelCoord={marker.coordinates.x}
+						topPixelCoord={marker.coordinates.y}
+						titlePosition={marker.labelPosition}
 						title={cities[index].name}
 					/>
 				))}
