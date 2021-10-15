@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import 'leaflet/dist/leaflet.css';
 
 import {LeafletMap} from './LeafletMap';
-import {CustomMarker} from './CustomMarker';
+import {CustomMarker} from './Marker/CustomMarker';
 import {AnimatedPath} from './AnimatedPath';
 import {AbsoluteFill} from 'remotion';
 import {useEnrichCoordinates} from './useEnrichCoordinates.ts';

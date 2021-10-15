@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {FaMapMarkerAlt} from 'react-icons/fa';
 import {IconContext} from 'react-icons';
+import {MarkerLabel} from './MarkerLabel';
 
 interface Props {
 	leftPixelCoord: number;
@@ -23,7 +24,7 @@ export const CustomMarker: React.FC<Props> = ({
 			titlePosition="left"
 		>
 			{(titlePosition === 'left' || titlePosition === 'top') && (
-				<Title titlePosition={titlePosition}>{title}</Title>
+				<MarkerLabel titlePosition={titlePosition} title={title} />
 			)}
 			<IconContext.Provider
 				value={{color: '#962fbf', className: 'global-class-name'}}
@@ -31,7 +32,7 @@ export const CustomMarker: React.FC<Props> = ({
 				<Icon />
 			</IconContext.Provider>
 			{(titlePosition === 'right' || titlePosition === 'bottom') && (
-				<Title titlePosition={titlePosition}>{title}</Title>
+				<MarkerLabel titlePosition={titlePosition} title={title} />
 			)}
 		</Container>
 	);
@@ -55,16 +56,4 @@ const Container = styled.div<{
 const Icon = styled(FaMapMarkerAlt)`
 	width: 100px;
 	height: 100px;
-`;
-
-const Title = styled.h2<{
-	titlePosition: string;
-}>`
-	position: absolute;
-	${({titlePosition}) => titlePosition === 'left' && `right: 110%`};
-	${({titlePosition}) => titlePosition === 'right' && `left: 112px`};
-	${({titlePosition}) => titlePosition === 'bottom' && `top: 100px`};
-	${({titlePosition}) => titlePosition === 'top' && `bottom: 100px`};
-	font-family: 'Aveny T WEB';
-	font-size: 60px;
 `;
